@@ -1,5 +1,5 @@
 /* 
- *  rtc.h is part of the HB-RF-ETH firmware - https://github.com/alexreinert/HB-RF-ETH
+ *  hmrtc.h is part of the HB-RF-ETH firmware - https://github.com/alexreinert/HB-RF-ETH
  *  
  *  Copyright 2022 Alexander Reinert
  *  

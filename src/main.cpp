@@ -26,7 +26,7 @@
 #include "pins.h"
 #include "led.h"
 #include "settings.h"
-#include "rtc.h"
+#include "hmrtc.h"
 #include "systemclock.h"
 #include "dcf.h"
 #include "ntpclient.h"

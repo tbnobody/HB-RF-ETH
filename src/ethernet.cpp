@@ -70,7 +70,6 @@ Ethernet::Ethernet(Settings *settings) : _settings(settings), _isConnected(false
         }
     }
 
-    ESP_ERROR_CHECK_WITHOUT_ABORT(esp_eth_set_default_handlers(_eth_netif));
     ESP_ERROR_CHECK_WITHOUT_ABORT(esp_event_handler_register(ETH_EVENT, ESP_EVENT_ANY_ID, &::_handleETHEvent, (void *)this));
     ESP_ERROR_CHECK_WITHOUT_ABORT(esp_event_handler_register(IP_EVENT, IP_EVENT_ETH_GOT_IP, &::_handleIPEvent, (void *)this));
 
@@ -79,10 +78,10 @@ Ethernet::Ethernet(Settings *settings) : _settings(settings), _isConnected(false
     _phy_config.reset_gpio_num = ETH_POWER_PIN;
     _phy = esp_eth_phy_new_lan8720(&_phy_config);
 
-    _mac_config = ETH_MAC_DEFAULT_CONFIG();
-    _mac_config.smi_mdc_gpio_num = ETH_MDC_PIN;
-    _mac_config.smi_mdio_gpio_num = ETH_MDIO_PIN;
-    _mac = esp_eth_mac_new_esp32(&_mac_config);
+    eth_mac_config_t mac_config = ETH_MAC_DEFAULT_CONFIG();
+    mac_config.smi_mdc_gpio_num = ETH_MDC_PIN;
+    mac_config.smi_mdio_gpio_num = ETH_MDIO_PIN;
+    _mac = esp_eth_mac_new_esp32(&mac_config);
 
     _eth_config = ETH_DEFAULT_CONFIG(_mac, _phy);
     _eth_handle = NULL;

@@ -40,7 +40,16 @@ class LED
 {
 private:
     uint8_t _state;
-    ledc_channel_config_t _channel_conf;
+    ledc_channel_config_t _channel_conf = {
+        .gpio_num = 0,
+        .speed_mode = LEDC_HIGH_SPEED_MODE,
+        .channel = LEDC_CHANNEL_MAX,
+        .intr_type = LEDC_INTR_DISABLE,
+        .timer_sel = LEDC_TIMER_0,
+        .duty = 0,
+        .hpoint = 0,
+        .flags { .output_invert = false },
+    };
     void _setPinState(bool enabled);
 
 public:

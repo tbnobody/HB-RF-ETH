@@ -21,7 +21,7 @@
 
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
-#include "rtc.h"
+#include "hmrtc.h"
 
 class SystemClock
 {

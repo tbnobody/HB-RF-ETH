@@ -79,8 +79,6 @@ uint32_t get_voltage(adc_unit_t adc_unit, adc_channel_t adc_channel, adc_bits_wi
     esp_adc_cal_characteristics_t *adc_chars = reinterpret_cast<esp_adc_cal_characteristics_t *>(calloc(1, sizeof(esp_adc_cal_characteristics_t)));
     esp_adc_cal_characterize(adc_unit, adc_atten, adc_width, DEFAULT_VREF, adc_chars);
 
-    adc_gpio_init(adc_unit, adc_channel);
-
     if (adc_unit == ADC_UNIT_1)
     {
         adc1_config_width(adc_width);

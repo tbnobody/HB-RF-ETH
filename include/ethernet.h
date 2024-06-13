@@ -37,7 +37,6 @@ private:
   esp_netif_config_t _netif_cfg;
   esp_netif_t *_eth_netif;
   esp_eth_handle_t _eth_handle;
-  eth_mac_config_t _mac_config;
   eth_phy_config_t _phy_config;
   esp_eth_mac_t *_mac;
   esp_eth_phy_t *_phy;

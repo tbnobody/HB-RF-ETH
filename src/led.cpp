@@ -78,15 +78,7 @@ void LED::stop()
 
 LED::LED(gpio_num_t pin)
 {
-    _channel_conf = {
-        .gpio_num = pin,
-        .speed_mode = LEDC_HIGH_SPEED_MODE,
-        .channel = LEDC_CHANNEL_MAX,
-        .intr_type = LEDC_INTR_DISABLE,
-        .timer_sel = LEDC_TIMER_0,
-        .duty = 0,
-        .hpoint = 0,
-    };
+    _channel_conf.gpio_num = pin;
 
     for (uint8_t i = 0; i < MAX_LED_COUNT; i++)
     {

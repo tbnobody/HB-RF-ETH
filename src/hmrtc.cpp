@@ -1,5 +1,5 @@
 /* 
- *  rtc.cpp is part of the HB-RF-ETH firmware - https://github.com/alexreinert/HB-RF-ETH
+ *  hmrtc.cpp is part of the HB-RF-ETH firmware - https://github.com/alexreinert/HB-RF-ETH
  *  
  *  Copyright 2022 Alexander Reinert
  *  
@@ -18,7 +18,7 @@
  */
 
 #include <stdint.h>
-#include "rtc.h"
+#include "hmrtc.h"
 #include "esp_log.h"
 
 static const char *TAG = "RTC";
@@ -48,7 +48,8 @@ static void i2c_master_init()
         .scl_io_num = HM_SCL_PIN,
         .sda_pullup_en = GPIO_PULLUP_ENABLE,
         .scl_pullup_en = GPIO_PULLUP_ENABLE,
-        .master{.clk_speed = 100000}};
+        .master { .clk_speed = 100000},
+        .clk_flags = I2C_SCLK_SRC_FLAG_FOR_NOMAL};
     i2c_param_config(I2C_NUM_0, &i2c_config);
     i2c_driver_install(I2C_NUM_0, I2C_MODE_MASTER, 0, 0, 0);
     _isDriverInstalled = true;

@@ -42,15 +42,15 @@ private:
   ip4_addr_t _dns1;
   ip4_addr_t _dns2;
 
-  int _timesource;
+  int32_t _timesource;
 
-  int _dcfOffset;
+  int32_t _dcfOffset;
 
-  int _gpsBaudrate;
+  int32_t _gpsBaudrate;
 
   char _ntpServer[65] = {0};
 
-  int _ledBrightness;
+  int32_t _ledBrightness;
 
 public:
   Settings();

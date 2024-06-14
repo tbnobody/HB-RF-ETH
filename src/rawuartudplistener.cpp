@@ -278,7 +278,7 @@ void RawUartUdpListener::_udpQueueHandler()
 
     for (;;)
     {
-        if (xQueueReceive(_udp_queue, &event, (portTickType)(100 / portTICK_PERIOD_MS)) == pdTRUE)
+        if (xQueueReceive(_udp_queue, &event, (TickType_t)(100 / portTICK_PERIOD_MS)) == pdTRUE)
         {
             handlePacket(event->pb, event->addr, event->port);
             pbuf_free(event->pb);

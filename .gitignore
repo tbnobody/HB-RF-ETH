@@ -3,6 +3,8 @@
 .vscode/c_cpp_properties.json
 .vscode/launch.json
 .vscode/ipch
+dependencies.lock
+managed_components/
 src/webui/*.gzip
 webui/.cache
 webui/dist

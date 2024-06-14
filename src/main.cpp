@@ -144,8 +144,8 @@ void app_main()
 
         ESP_LOGI(TAG, "  Serial: %s", radioModuleDetector.getSerial());
         ESP_LOGI(TAG, "  SGTIN: %s", radioModuleDetector.getSGTIN());
-        ESP_LOGI(TAG, "  BidCos Radio MAC: 0x%06X", radioModuleDetector.getBidCosRadioMAC());
-        ESP_LOGI(TAG, "  HmIP Radio MAC: 0x%06X", radioModuleDetector.getHmIPRadioMAC());
+        ESP_LOGI(TAG, "  BidCos Radio MAC: 0x%06lo", radioModuleDetector.getBidCosRadioMAC());
+        ESP_LOGI(TAG, "  HmIP Radio MAC: 0x%06lo", radioModuleDetector.getHmIPRadioMAC());
 
         const uint8_t *firmwareVersion = radioModuleDetector.getFirmwareVersion();
         ESP_LOGI(TAG, "  Firmware Version: %d.%d.%d", *firmwareVersion, *(firmwareVersion + 1), *(firmwareVersion + 2));

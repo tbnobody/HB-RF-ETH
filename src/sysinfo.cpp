@@ -22,10 +22,8 @@
 #include "freertos/task.h"
 #include "esp_ota_ops.h"
 #include "esp_log.h"
-#include "esp_adc_cal.h"
-#include "pins.h"
-
-#define DEFAULT_VREF 1100
+#include "esp_mac.h"
+#include "hmadc.h"
 
 static const char *TAG = "SysInfo";
 
@@ -74,32 +72,9 @@ void updateCPUUsageTask(void *arg)
     vTaskDelete(NULL);
 }
 
-uint32_t get_voltage(adc_unit_t adc_unit, adc_channel_t adc_channel, adc_bits_width_t adc_width, adc_atten_t adc_atten)
-{
-    esp_adc_cal_characteristics_t *adc_chars = reinterpret_cast<esp_adc_cal_characteristics_t *>(calloc(1, sizeof(esp_adc_cal_characteristics_t)));
-    esp_adc_cal_characterize(adc_unit, adc_atten, adc_width, DEFAULT_VREF, adc_chars);
-
-    if (adc_unit == ADC_UNIT_1)
-    {
-        adc1_config_width(adc_width);
-        adc1_config_channel_atten((adc1_channel_t)adc_channel, adc_atten);
-    }
-    else
-    {
-        adc2_config_channel_atten((adc2_channel_t)adc_channel, adc_atten);
-    }
-
-    uint32_t voltage;
-    esp_adc_cal_get_voltage(adc_channel, adc_chars, &voltage);
-
-    free(adc_chars);
-
-    return voltage;
-}
-
 board_type_t detectBoard()
 {
-    uint32_t voltage = get_voltage(BOARD_REV_SENSE_UNIT, BOARD_REV_SENSE_CHANNEL, ADC_WIDTH_BIT_10, ADC_ATTEN_DB_11);
+    uint32_t voltage = get_voltage(BOARD_REV_SENSE_UNIT, BOARD_REV_SENSE_CHANNEL, ADC_BITWIDTH_10, ADC_ATTEN_DB_11);
 
     switch (voltage) // R31/R32
     {
@@ -116,7 +91,7 @@ board_type_t detectBoard()
         return BOARD_TYPE_REV_1_10_SK;
 
     default:
-        ESP_LOGW(TAG, "Could not determine board, voltage: %u", voltage);
+        ESP_LOGW(TAG, "Could not determine board, voltage: %lo", voltage);
         return BOARD_TYPE_UNKNOWN;
     }
 }
@@ -129,7 +104,7 @@ SysInfo::SysInfo()
     esp_read_mac(baseMac, ESP_MAC_ETH);
     snprintf(_serial, sizeof(_serial), "%02X%02X%02X%02X%02X%02X", baseMac[0], baseMac[1], baseMac[2], baseMac[3], baseMac[4], baseMac[5]);
 
-    _currentVersion = esp_ota_get_app_description()->version;
+    _currentVersion = esp_app_get_description()->version;
 
     _board = detectBoard();
 }

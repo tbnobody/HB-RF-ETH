@@ -76,12 +76,14 @@ Ethernet::Ethernet(Settings *settings) : _settings(settings), _isConnected(false
     _phy_config = ETH_PHY_DEFAULT_CONFIG();
     _phy_config.phy_addr = ETH_PHY_ADDR;
     _phy_config.reset_gpio_num = ETH_POWER_PIN;
-    _phy = esp_eth_phy_new_lan8720(&_phy_config);
+    _phy = esp_eth_phy_new_lan87xx(&_phy_config);
 
-    eth_mac_config_t mac_config = ETH_MAC_DEFAULT_CONFIG();
-    mac_config.smi_mdc_gpio_num = ETH_MDC_PIN;
-    mac_config.smi_mdio_gpio_num = ETH_MDIO_PIN;
-    _mac = esp_eth_mac_new_esp32(&mac_config);
+    eth_esp32_emac_config_t esp32_config = ETH_ESP32_EMAC_DEFAULT_CONFIG();
+    esp32_config.smi_mdc_gpio_num = ETH_MDC_PIN;
+    esp32_config.smi_mdio_gpio_num = ETH_MDIO_PIN;
+
+    eth_mac_config_t config = ETH_MAC_DEFAULT_CONFIG();
+    _mac = esp_eth_mac_new_esp32(&esp32_config, &config);
 
     _eth_config = ETH_DEFAULT_CONFIG(_mac, _phy);
     _eth_handle = NULL;

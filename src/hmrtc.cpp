@@ -98,7 +98,7 @@ bool Rtc::begin()
     i2c_master_start(cmd);
     i2c_master_write_byte(cmd, (_address << 1) | I2C_MASTER_WRITE, true);
     i2c_master_stop(cmd);
-    esp_err_t ret = i2c_master_cmd_begin(I2C_NUM_0, cmd, 50 / portTICK_RATE_MS);
+    esp_err_t ret = i2c_master_cmd_begin(I2C_NUM_0, cmd, 50 / portTICK_PERIOD_MS);
     i2c_cmd_link_delete(cmd);
 
     return ret == ESP_OK;
@@ -119,7 +119,7 @@ struct timeval Rtc::GetTime()
     i2c_master_read(cmd, rawData, sizeof(rawData) - 1, I2C_MASTER_ACK);
     i2c_master_read_byte(cmd, rawData + sizeof(rawData) - 1, I2C_MASTER_NACK);
     i2c_master_stop(cmd);
-    esp_err_t ret = i2c_master_cmd_begin(I2C_NUM_0, cmd, 50 / portTICK_RATE_MS);
+    esp_err_t ret = i2c_master_cmd_begin(I2C_NUM_0, cmd, 50 / portTICK_PERIOD_MS);
     i2c_cmd_link_delete(cmd);
 
     if (ret != ESP_OK)
@@ -202,7 +202,7 @@ void Rtc::SetTime(struct timeval now)
     i2c_master_write_byte(cmd, bin2bcd(month), true);
     i2c_master_write_byte(cmd, bin2bcd(year), true);
     i2c_master_stop(cmd);
-    esp_err_t ret = i2c_master_cmd_begin(I2C_NUM_0, cmd, 50 / portTICK_RATE_MS);
+    esp_err_t ret = i2c_master_cmd_begin(I2C_NUM_0, cmd, 50 / portTICK_PERIOD_MS);
     i2c_cmd_link_delete(cmd);
 
     if (ret != ESP_OK)
@@ -229,7 +229,7 @@ bool RtcRX8130::begin()
         i2c_master_write_byte(cmd, 0x1f, true);
         i2c_master_write_byte(cmd, 0x31, true);
         i2c_master_stop(cmd);
-        esp_err_t ret = i2c_master_cmd_begin(I2C_NUM_0, cmd, 50 / portTICK_RATE_MS);
+        esp_err_t ret = i2c_master_cmd_begin(I2C_NUM_0, cmd, 50 / portTICK_PERIOD_MS);
         i2c_cmd_link_delete(cmd);
 
         return ret == ESP_OK;

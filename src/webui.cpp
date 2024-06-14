@@ -91,7 +91,7 @@ void formatRadioMAC(uint32_t radioMAC, char *buf)
     }
     else
     {
-        sprintf(buf, "0x%06X", radioMAC);
+        sprintf(buf, "0x%06lo", radioMAC);
     }
 }
 

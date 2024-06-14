@@ -36,7 +36,7 @@ GPS::GPS(Settings *settings, SystemClock *clk) : _settings(settings), _clk(clk)
         .stop_bits = UART_STOP_BITS_1,
         .flow_ctrl = UART_HW_FLOWCTRL_DISABLE,
         .rx_flow_ctrl_thresh = 0,
-        .use_ref_tick = false};
+        .source_clk = UART_SCLK_DEFAULT};
     uart_param_config(UART_NUM_2, &uart_config);
     uart_set_pin(UART_NUM_2, GPIO_NUM_0, DCF_PIN, UART_PIN_NO_CHANGE, UART_PIN_NO_CHANGE);
 
@@ -65,7 +65,7 @@ void GPS::_gpsSerialQueueHandler()
 
     for (;;)
     {
-        if (xQueueReceive(_uart_queue, (void *)&event, (portTickType)portMAX_DELAY))
+        if (xQueueReceive(_uart_queue, (void *)&event, (TickType_t)portMAX_DELAY))
         {
             switch (event.type)
             {

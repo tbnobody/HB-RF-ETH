@@ -18,6 +18,7 @@
  */
 
 #include "settings.h"
+#include "esp_mac.h"
 #include "nvs.h"
 #include "nvs_flash.h"
 #include <string.h>

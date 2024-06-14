@@ -110,7 +110,7 @@ void RadioModuleConnector::_serialQueueHandler()
 
     for (;;)
     {
-        if (xQueueReceive(_uart_queue, (void *)&event, (portTickType)portMAX_DELAY))
+        if (xQueueReceive(_uart_queue, (void *)&event, (TickType_t)portMAX_DELAY))
         {
             switch (event.type)
             {

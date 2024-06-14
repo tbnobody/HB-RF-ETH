@@ -39,7 +39,8 @@
 
 #define DCF_PIN GPIO_NUM_39
 
-#define BOARD_REV_SENSE_CHANNEL ((adc_channel_t)ADC1_GPIO36_CHANNEL)
+// Unit 1, Channel --> Pin 36
+#define BOARD_REV_SENSE_CHANNEL ADC_CHANNEL_0
 #define BOARD_REV_SENSE_UNIT ADC_UNIT_1
 
 #define ETH_PHY_ADDR 0

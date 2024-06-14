@@ -36,13 +36,13 @@ NtpClient::NtpClient(Settings *settings, SystemClock *clk)
 
 void NtpClient::start()
 {
-    sntp_setoperatingmode(SNTP_OPMODE_POLL);
-    sntp_setservername(0, _settings->getNtpServer());
+    esp_sntp_setoperatingmode(SNTP_OPMODE_POLL);
+    esp_sntp_setservername(0, _settings->getNtpServer());
     sntp_set_time_sync_notification_cb(_time_sync_notification_cb);
-    sntp_init();
+    esp_sntp_init();
 }
 
 void NtpClient::stop()
 {
-    sntp_stop();
+    esp_sntp_stop();
 }

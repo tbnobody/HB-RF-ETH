@@ -46,7 +46,7 @@ GPS::GPS(Settings *settings, SystemClock *clk) : _settings(settings), _clk(clk)
 
 void GPS::start()
 {
-    uart_driver_install(UART_NUM_2, UART_FIFO_LEN * 2, 0, 20, &_uart_queue, 0);
+    uart_driver_install(UART_NUM_2, UART_HW_FIFO_LEN(UART_NUM_2) * 2, 0, 20, &_uart_queue, 0);
     xTaskCreate(gpsSerialQueueHandlerTask, "GPS_UART_QueueHandler", 4096, this, 15, &_tHandle);
 }
 
@@ -59,7 +59,7 @@ void GPS::stop()
 void GPS::_gpsSerialQueueHandler()
 {
     uart_event_t event;
-    uint8_t *buffer = (uint8_t *)malloc(UART_FIFO_LEN);
+    uint8_t *buffer = (uint8_t *)malloc(UART_HW_FIFO_LEN(UART_NUM_2));
 
     uart_flush_input(UART_NUM_2);
 

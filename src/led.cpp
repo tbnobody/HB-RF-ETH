@@ -55,6 +55,7 @@ void LED::start(Settings *settings)
         .timer_num = LEDC_TIMER_0,
         .freq_hz = 5000,
         .clk_cfg = LEDC_AUTO_CLK,
+        .deconfigure = false,
     };
 
     _highDuty = settings->getLEDBrightness() * (1 << ledc_timer.duty_resolution) / 100;

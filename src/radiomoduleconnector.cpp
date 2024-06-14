@@ -62,7 +62,7 @@ void RadioModuleConnector::start()
 {
     setLED(false, false, false);
 
-    uart_driver_install(UART_NUM_1, UART_FIFO_LEN * 2, 0, 20, &_uart_queue, 0);
+    uart_driver_install(UART_NUM_1, UART_HW_FIFO_LEN(UART_NUM_1) * 2, 0, 20, &_uart_queue, 0);
 
     xTaskCreate(serialQueueHandlerTask, "RadioModuleConnector_UART_QueueHandler", 4096, this, 15, &_tHandle);
     resetModule();
@@ -104,7 +104,7 @@ void RadioModuleConnector::sendFrame(unsigned char *buffer, uint16_t len)
 void RadioModuleConnector::_serialQueueHandler()
 {
     uart_event_t event;
-    uint8_t *buffer = (uint8_t *)malloc(UART_FIFO_LEN);
+    uint8_t *buffer = (uint8_t *)malloc(UART_HW_FIFO_LEN(UART_NUM_1));
 
     uart_flush_input(UART_NUM_1);
 
